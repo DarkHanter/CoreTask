@@ -16,10 +16,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void createUsersTable() {
-        String create = "CREATE TABLE IF NOT EXISTS users (id SERIAL NOT NULL," +
-                "name character varying(25)," +
-                "lastName character varying(25)," +
-                "age smallint NOT NULL," +
+        String create = "CREATE TABLE IF NOT EXISTS users (`id` BIGINT NOT NULL AUTO_INCREMENT," +
+                "`name` VARCHAR(45)," +
+                "`lastName` VARCHAR(45)," +
+                "`age` SMALLINT NOT NULL," +
                 "PRIMARY KEY (id))";
         Connection(create);
     }
@@ -32,7 +32,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         String save = "INSERT INTO users (name, lastName, age) VALUES (?, ?, ?)";
         try {
-            connection = Util.PSQL();
+            connection = Util.MySQL();
             preparedStatement = connection.prepareStatement(save);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
@@ -61,7 +61,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> array = new ArrayList<>();
         String getUsers = "SELECT * FROM users";
         try {
-            connection = Util.PSQL();
+            connection = Util.MySQL();
             preparedStatement = connection.prepareStatement(getUsers);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -97,7 +97,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     private void Connection(String str) {
         try {
-            connection = Util.PSQL();
+            connection = Util.MySQL();
             preparedStatement = connection.prepareStatement(str);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

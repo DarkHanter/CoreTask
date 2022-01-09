@@ -6,13 +6,13 @@ import java.sql.SQLException;
 
 public class Util {
     // реализуйте настройку соеденения с БД
-    public static Connection PSQL() {
+    public static Connection MySQL() {
         Connection connection = null;
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/user",
-                            "postgres", "1234");
+                    .getConnection("jdbc:mysql://localhost:3306/user",
+                            "root", "1234");
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
